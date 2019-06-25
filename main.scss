@@ -1,0 +1,188 @@
+
+$g1: #b9b7b7;
+$g2: #8c8a8a;
+$g3: #b3b0b0;
+$g4: #a5a5a5;
+
+$yellow: #f9c80e;
+$sky: lighten($yellow, 10%);
+* {
+  box-sizing: border-box;
+  font-family: 'Rubik Mono One', sans-serif;
+
+}
+
+.sky {
+  position: absolute;
+}
+
+#star-six {
+     width: 0;
+     height: 0;
+     border-left: 30px solid transparent;
+     border-right: 30px solid transparent;
+     border-bottom: 60px solid $sky;
+     position: relative;
+   }
+   #star-six:after {
+     width: 0;
+     height: 0;
+     border-left: 30px solid transparent;
+     border-right: 30px solid transparent;
+     border-top: 60px solid $sky;
+     position: absolute;
+     content: "";
+     top: 20px;
+     left: -30px;
+
+   }
+
+   #moon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      box-shadow: 15px 15px 0 0 $sky;
+    }
+
+@function randomNum($min, $max) {
+  $rand: random();
+  $randomNum: $min + floor($rand * (($max - $min) + 1));
+
+  @return $randomNum;
+}
+
+
+.castle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 200px;
+}
+
+$colours:
+  "grey1" $g1,
+  "grey2" $g2,
+  "grey3" $g3,
+  "grey4" $g4;
+
+@each $i in $colours{
+	.#{nth($i, 1)}-color {
+		background-color: nth($i, 2);
+	}
+}
+
+.tower-left {
+  position: relative;
+
+  .sky {
+    top: -150px;
+    left: -50px;
+  }
+}
+
+.tower-right {
+  position: relative;
+
+  .sky {
+    top: -180px;
+    right: -20px;
+  }
+}
+
+.tower-narrow {
+  width: 150px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.tower-wide {
+  width: 200px;
+}
+.tower-divider {
+  background-color: $g2;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border: 2px solid #423636;
+
+  .brick {
+    position: relative;
+    top: -37px;
+  }
+}
+
+.tower-window {
+  background-color: darken($yellow, 2%);
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: 0 auto;
+  top: 40%;
+  transform: translateY(-50%);
+  border: 4px solid #423636;
+
+  &:after {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 44px;
+  background-color: darken($yellow, 2%);
+  margin: 0 auto;
+  top: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -46px;
+  border: 4px solid #423636;
+  border-bottom: none;
+  }
+
+}
+
+.tower-middle {
+  position: relative;
+  bottom: 170px;
+}
+
+.tower-crown {
+
+  span {
+    height: 30px !important;
+    width: 20% !important;
+    border: 2px solid #423636;
+  }
+}
+
+@for $i from 1 through 14 {
+  $num:  #{randomNum(50, 100)}px;
+  $clr: #{randomNum(1, 4)};
+  .bricks:nth-child(#{$i}) {
+    span {
+      display: inline-block;
+      height:30px;
+      border-radius: 3px;
+      margin-right: 2px;
+      border: 2px solid #423636;
+    }
+
+    span:nth-child(1) {
+      width: $num;
+    }
+
+    span:nth-child(2) {
+      width: calc(100% - #{$num} - 5px);
+    }
+  }
+}
+
+.text {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.5rem;
+}
