@@ -1,174 +1,35 @@
-
+$numberOfBricksInTheHighestTower: 10;
 $g1: #b9b7b7;
 $g2: #8c8a8a;
 $g3: #b3b0b0;
 $g4: #a5a5a5;
-
-$yellow: #f9c80e;
+$yellow: #f8f850;
 $sky: lighten($yellow, 10%);
-* {
-  box-sizing: border-box;
-  font-family: 'Rubik Mono One', sans-serif;
+$brickBorder: 2px solid #423636;
+$brickHeight: 30px;
 
+$colours: "grey1" $g1, "grey2" $g2, "grey3" $g3, "grey4" $g4;
+
+.brick {
+  background-color: #fafafa;
 }
-
-.sky {
-  position: absolute;
-}
-
-#star-six {
-     width: 0;
-     height: 0;
-     border-left: 30px solid transparent;
-     border-right: 30px solid transparent;
-     border-bottom: 60px solid $sky;
-     position: relative;
-   }
-   #star-six:after {
-     width: 0;
-     height: 0;
-     border-left: 30px solid transparent;
-     border-right: 30px solid transparent;
-     border-top: 60px solid $sky;
-     position: absolute;
-     content: "";
-     top: 20px;
-     left: -30px;
-
-   }
-
-   #moon {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      box-shadow: 15px 15px 0 0 $sky;
-    }
 
 @function randomNum($min, $max) {
   $rand: random();
   $randomNum: $min + floor($rand * (($max - $min) + 1));
-
   @return $randomNum;
 }
 
-
-.castle-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: 200px;
-}
-
-$colours:
-  "grey1" $g1,
-  "grey2" $g2,
-  "grey3" $g3,
-  "grey4" $g4;
-
-@each $i in $colours{
-	.#{nth($i, 1)}-color {
-		background-color: nth($i, 2);
-	}
-}
-
-.tower-left {
-  position: relative;
-
-  .sky {
-    top: -150px;
-    left: -50px;
-  }
-}
-
-.tower-right {
-  position: relative;
-
-  .sky {
-    top: -180px;
-    right: -20px;
-  }
-}
-
-.tower-narrow {
-  width: 150px;
-  margin: 0 auto;
-  position: relative;
-}
-
-.tower-wide {
-  width: 200px;
-}
-.tower-divider {
-  background-color: $g2;
-  height: 30px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  border: 2px solid #423636;
-
-  .brick {
-    position: relative;
-    top: -37px;
-  }
-}
-
-.tower-window {
-  background-color: darken($yellow, 2%);
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  left: 0;
-  right: 0;
-  display: block;
-  margin: 0 auto;
-  top: 40%;
-  transform: translateY(-50%);
-  border: 4px solid #423636;
-
-  &:after {
-  content: "";
-  display: block;
-  width: 15px;
-  height: 44px;
-  background-color: darken($yellow, 2%);
-  margin: 0 auto;
-  top: 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -46px;
-  border: 4px solid #423636;
-  border-bottom: none;
-  }
-
-}
-
-.tower-middle {
-  position: relative;
-  bottom: 170px;
-}
-
-.tower-crown {
-
-  span {
-    height: 30px !important;
-    width: 20% !important;
-    border: 2px solid #423636;
-  }
-}
-
-@for $i from 1 through 14 {
-  $num:  #{randomNum(50, 100)}px;
+@for $i from 1 through $numberOfBricksInTheHighestTower {
+  $num: #{randomNum(50, 100)}px;
   $clr: #{randomNum(1, 4)};
   .bricks:nth-child(#{$i}) {
     span {
       display: inline-block;
-      height:30px;
+      height: $brickHeight;
       border-radius: 3px;
       margin-right: 2px;
-      border: 2px solid #423636;
+      border: $brickBorder;
     }
 
     span:nth-child(1) {
@@ -181,8 +42,222 @@ $colours:
   }
 }
 
-.text {
-  text-align: center;
-  margin-top: 50px;
-  font-size: 1.5rem;
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: #0a64f6;
+  overflow-x: hidden;
+}
+
+.castle-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-top: 100px;
+  transform: scale(.5);
+  position: relative;
+  z-index: 9;
+  @media (min-width: 800px) {
+    transform: scale(1);
+  }
+}
+
+.tower-middle {
+  position: relative;
+  bottom: 0;
+
+  .tower-wide {
+    width: 200px;
+    overflow: hidden;
+  }
+}
+
+.tower-narrow {
+  width: 150px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.tower-wide {
+  width: 200px;
+}
+
+.tower-divider {
+  background-color: #fafafa;
+  height: $brickHeight;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  border: 2px solid #423636;
+
+  .brick {
+    position: relative;
+    top: calc((#{$brickHeight} + 5px) * -1);
+  }
+}
+
+.tower-crown {
+  span {
+    height: $brickHeight;
+    width: 20%;
+    border: $brickBorder;
+  }
+}
+
+// windows
+.tower-window {
+  background-color: #000;
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: 0 auto;
+  top: 40%;
+  transform: translateY(-50%);
+  border: 7px solid #423636;
+
+  &::after {
+    content: "";
+    display: block;
+    width: 15px;
+    height: 44px;
+    background-color: #000;
+    margin: 0 auto;
+    top: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -46px;
+    border: 7px solid #423636;
+    border-bottom: none;
+  }
+}
+
+// gate
+.tower-gate {
+  height: 200px;
+  background-color: #000;
+  position: relative;
+  z-index: 1;
+  margin-top: 20px;
+
+  .gate-crown {
+    height: 60px;
+    background-color: #fafafa;
+    position: absolute;
+    top: -60px;
+    z-index: 99;
+    width: 100px;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    border: 7px solid #484545;
+  }
+
+  .wing {
+    height: 100%;
+    width: 80px;
+    position: absolute;
+    bottom: 0px;
+    border: 7px solid #484545;
+    background-color: #f8f850;
+
+    .upper-corner {
+      position: absolute;
+      top: -18px;
+      width: 100%;
+      height: 30px;
+      z-index: 99;
+      border-top: 7px solid #484545;
+      background-color: #f8f850;
+    }
+  }
+
+  .left-wing {
+    left: -50px;
+
+    .upper-corner {
+      transform: skewY(20deg) translateX(-7px);
+      border-left: 7px solid #484545;
+    }
+  }
+
+  .right-wing {
+    right: -50px;
+
+    .upper-corner {
+      transform: skewY(-20deg) translateX(7px);
+      border-right: 7px solid #484545;
+    }
+  }
+}
+
+// sky
+.sky {
+  position: absolute;
+}
+
+#star-six {
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-bottom: 60px solid $sky;
+  position: relative;
+
+  &::after {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 60px solid $sky;
+    position: absolute;
+    content: "";
+    top: 20px;
+    left: -30px;
+  }
+}
+
+#moon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 15px 15px 0 0 $sky;
+}
+
+.tower-left {
+  position: relative;
+
+  .sky {
+    top: -180px;
+    left: -50px;
+  }
+}
+
+.tower-right {
+  position: relative;
+
+  .sky {
+    top: -190px;
+    right: -60px;
+  }
+}
+
+.hill {
+  background-color: green;
+  height: 30vh;
+  border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    transform: scale(1.5);
+
 }
